@@ -4,9 +4,22 @@ FROM python:3.10-slim
 # Set the working directory
 WORKDIR /app
 
-# Copy requirements.txt and install dependencies
+# Copy only the requirements file first
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+
+# Install dependencies in the specified order
+RUN pip install fastapi
+RUN pip install python-dotenv
+RUN pip install google-generativeai
+RUN pip install langchain_community
+RUN pip install PyPDF2
+RUN pip install langchain-huggingface
+RUN pip install langchain-google-genai
+RUN pip install uvicorn
+RUN pip install streamlit
+RUN pip install python-multipart
+RUN pip install chromadb
+RUN pip install sentence-transformers
 
 # Copy the application code into the container
 COPY . .
@@ -18,4 +31,4 @@ EXPOSE 8000
 ENV PYTHONUNBUFFERED=1
 
 # Command to run the FastAPI server
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "pdf_chat_api:app", "--host", "0.0.0.0", "--port", "8000"]

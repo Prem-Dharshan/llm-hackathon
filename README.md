@@ -48,7 +48,7 @@ GOOGLE_API_KEY=your_google_api_key_here
 ### Run FastAPI Server (Standalone)
 1. Run the FastAPI server:
     ```bash
-    uvicorn app:app --host 0.0.0.0 --port 8000
+    uvicorn pdf_chat_api:app --host 0.0.0.0 --port 8000
     ```
 2. Open your browser and navigate to:
     - API Documentation: [http://localhost:8000/docs](http://localhost:8000/docs)
