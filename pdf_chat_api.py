@@ -37,27 +37,23 @@ app = FastAPI(
     },
 )
 
-# Serve static files (including favicon)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Initialize Google API client
 try:
     genai.configure(api_key=GOOGLE_API_KEY)
 except Exception as e:
     raise Exception(f"Error configuring Google API: {str(e)}")
 
-# Initialize BGE embeddings
 embed_model = HuggingFaceEmbeddings(
     model_name="BAAI/bge-small-en",
     model_kwargs={'device': 'cpu'},
     encode_kwargs={'normalize_embeddings': True}
 )
 
-# Define a model for the user input question
 class UserQuestion(BaseModel):
     question: str
 
-# Function to extract text from PDF
+
 def get_pdf_text(pdf_docs: List[UploadFile]):
     text = ""
     for pdf in pdf_docs:
@@ -66,12 +62,12 @@ def get_pdf_text(pdf_docs: List[UploadFile]):
             text += page.extract_text()
     return text
 
-# Function to split text into chunks
+
 def get_text_chunks(text: str):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
     return text_splitter.split_text(text)
 
-# Function to create vector store
+
 def get_vector_store(text_chunks: List[str]):
     vector_store = Chroma.from_texts(
         texts=text_chunks,
@@ -81,7 +77,7 @@ def get_vector_store(text_chunks: List[str]):
     vector_store.persist()
     return vector_store
 
-# Function to create conversational chain
+
 def get_conversational_chain():
     prompt_template = """
     Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
@@ -91,7 +87,7 @@ def get_conversational_chain():
     Answer:
     """
     model = ChatGoogleGenerativeAI(
-        model="gemini-pro",  # Or your custom model
+        model="gemini-pro",
         temperature=0.3,
         google_api_key=GOOGLE_API_KEY
     )
@@ -106,6 +102,7 @@ async def read_root():
     """
     return {"message": "Welcome to the PDF Chat API!"}
 
+
 # Endpoint to upload PDF and ask questions
 @app.post("/ask_question/")
 async def ask_question(
@@ -118,28 +115,21 @@ async def ask_question(
     - **pdf_files**: One or more PDF files to process.
     """
     try:
-        # Extract text from PDF files
         raw_text = get_pdf_text(pdf_files)
         
-        # Split the extracted text into chunks
         text_chunks = get_text_chunks(raw_text)
         
-        # Create vector store from text chunks
         get_vector_store(text_chunks)
 
-        # Load vector store for similarity search
         vector_store = Chroma(
             persist_directory="chroma_db",
             embedding_function=embed_model
         )
 
-        # Perform similarity search based on the user's question
         docs = vector_store.similarity_search(user_question)
         
-        # Get the conversational chain for answering questions
         chain = get_conversational_chain()
 
-        # Get the answer from the chain
         response = chain(
             {"input_documents": docs, "question": user_question},
             return_only_outputs=True

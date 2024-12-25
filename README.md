@@ -10,7 +10,7 @@ A FastAPI service that allows users to upload PDF documents and ask questions ab
 ---
 
 ## Requirements
-- Python 3.8+
+- Python 3.10+
 - [Google Generative AI API Key](https://developers.generativeai.google)
 
 ---
