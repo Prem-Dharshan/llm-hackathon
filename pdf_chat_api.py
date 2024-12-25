@@ -27,9 +27,9 @@ app = FastAPI(
     ),
     version="1.0.0",
     contact={
-        "name": "Your Name",
-        "url": "https://yourwebsite.com",
-        "email": "your.email@example.com",
+        "name": "DPD",
+        "url": "https://github.com/Prem-Dharshan/llm-hackathon",
+        "email": "whizzkid.dpd@gmail.com",
     },
     license_info={
         "name": "MIT License",
