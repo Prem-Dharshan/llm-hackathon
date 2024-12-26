@@ -10,11 +10,10 @@ COPY requirements.txt .
 # Install dependencies in the specified order
 RUN pip install fastapi
 RUN pip install python-dotenv
-RUN pip install google-generativeai
+RUN pip install ollama  # Ollama's Python library for Mistral
 RUN pip install langchain_community
 RUN pip install PyPDF2
 RUN pip install langchain-huggingface
-RUN pip install langchain-google-genai
 RUN pip install uvicorn
 RUN pip install streamlit
 RUN pip install python-multipart
