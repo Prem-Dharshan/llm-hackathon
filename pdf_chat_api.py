@@ -23,7 +23,7 @@ app = FastAPI(
     version="1.0.0",
     contact={
         "name": "DPD",
-        "url": "https://github.com/Prem-Dharshan/llm-hackathon",
+        "url": "https://github.com/Prem-Dharshan/pdf-analyzer",
         "email": "whizzkid.dpd@gmail.com",
     },
     license_info={
