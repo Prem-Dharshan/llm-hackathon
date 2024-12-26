@@ -10,7 +10,7 @@ COPY requirements.txt .
 # Install dependencies in the specified order
 RUN pip install fastapi
 RUN pip install python-dotenv
-RUN pip install ollama  # Ollama's Python library for Mistral
+RUN pip install ollama
 RUN pip install langchain_community
 RUN pip install PyPDF2
 RUN pip install langchain-huggingface
