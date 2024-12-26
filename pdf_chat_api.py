@@ -21,7 +21,17 @@ app = FastAPI(
         "The API processes the PDF, extracts text, and uses a conversational AI model to answer queries."
     ),
     version="1.0.0",
+    contact={
+        "name": "DPD",
+        "url": "https://github.com/Prem-Dharshan/llm-hackathon",
+        "email": "whizzkid.dpd@gmail.com",
+    },
+    license_info={
+        "name": "MIT License",
+        "url": "https://opensource.org/licenses/MIT",
+    },
 )
+
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
