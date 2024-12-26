@@ -1,4 +1,6 @@
-# PDF Chat API
+# AI ML Olympiad Hackathon
+
+## PDF LLM 
 
 A FastAPI service that allows users to upload PDF documents and ask questions about their content. The API uses conversational AI to answer queries based on the uploaded PDFs.
 
